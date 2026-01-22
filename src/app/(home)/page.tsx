@@ -15,19 +15,29 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-4 w-full h-[90vh] justify-between max-w-5xl lg:max-w-7xl mx-auto bg-zinc-900/40 border border-orange-500 rounded-md p-4">
       <header className="flex justify-between py-5">
-        <h1 className="text-zinc-50 text-5xl font-bold">
+        <h1 className="text-zinc-50 text-3xl md:text-5xl font-bold">
           Kwai <span className="text-orange-500">Score</span>
         </h1>
         <div className="flex items-center gap-2">
           <span>
-            <CircleCheck className="text-green-500" />
+            <CircleCheck className="text-green-500" size={20} />
           </span>
-          <span className="text-zinc-50">Google Drive Conectado</span>
+          <span className="text-zinc-50 text-xs md:text-2xl font-bold">
+            Google Drive Conectado
+          </span>
         </div>
       </header>
+      <div className="md:hidden lg:hidden">
+        <Input
+          className="border-orange-500 text-zinc-50"
+          placeholder="Pesquisar"
+        />
+      </div>
       <div className="">
         <div className="flex gap-2">
           <FilterButton label="Alta qualidade" isActive />
+          <FilterButton label="Alta qualidade" isActive={false} />
+          <FilterButton label="Alta qualidade" isActive={false} />
         </div>
       </div>
       <div className="flex-1 overflow-hidden">
@@ -49,7 +59,10 @@ export default function Home() {
           </SelectContent>
         </Select>
 
-        <Input className="border-orange-500" placeholder="Pesquisar" />
+        <Input
+          className="border-orange-500 max-md:hidden"
+          placeholder="Pesquisar"
+        />
       </div>
     </main>
   );
