@@ -53,9 +53,8 @@ export default function Home() {
             <SelectValue placeholder="Selecionar Mês" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
+            <SelectItem value="light">Alta Qualidade</SelectItem>
+            <SelectItem value="dark">Baixa Qualidade</SelectItem>
           </SelectContent>
         </Select>
 

@@ -29,7 +29,7 @@ export const UserCard = () => {
       </div>
       <footer className="mx-auto w-2/3 border border-hairline border-white/10 p-3 rounded-md">
         <div className="flex justify-between text-zinc-50">
-          <div className="flex-col flex text-center  gap-1">
+          <div className="flex-col flex text-center gap-1">
             <span className="text-zinc-400 text-[0.8rem]">Seguidores</span>
 
             <div className="flex gap-1 items-center">
@@ -37,7 +37,7 @@ export const UserCard = () => {
               <span className="text-amber-50 font-bold">963.2K</span>
             </div>
           </div>
-          <div className="flex-col flex text-cente  gap-1">
+          <div className="flex-col flex text-center gap-1">
             <span className="text-zinc-400 text-[0.8rem]">Curtidas</span>
 
             <div className="flex gap-1  items-center">
