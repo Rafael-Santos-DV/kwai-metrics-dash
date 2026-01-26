@@ -9,9 +9,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UserCard } from "@/components/user-card";
+import { UserListContainer } from "@/components/user-list-container";
+import { getAllSheetsData } from "@/services/sheet";
 import { CircleCheck } from "lucide-react";
 
-export default function Home() {
+export default async function Home() {
+  const pagesData = await getAllSheetsData();
   return (
     <main className="flex flex-col gap-4 w-full h-[90vh] justify-between max-w-5xl lg:max-w-7xl mx-auto bg-zinc-900/40 border border-orange-500 rounded-md p-4">
       <header className="flex justify-between py-5">
@@ -40,29 +43,7 @@ export default function Home() {
           <FilterButton label="Alta qualidade" isActive={false} />
         </div>
       </div>
-      <div className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full rounded-md p-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
-            <UserCard />
-          </div>
-        </ScrollArea>
-      </div>
-      <div className="flex gap-4 text-zinc-50">
-        <Select>
-          <SelectTrigger className="w-full border-orange-500 ">
-            <SelectValue placeholder="Selecionar Mês" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Alta Qualidade</SelectItem>
-            <SelectItem value="dark">Baixa Qualidade</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Input
-          className="border-orange-500 max-md:hidden"
-          placeholder="Pesquisar"
-        />
-      </div>
+      <UserListContainer data={pagesData} />
     </main>
   );
 }

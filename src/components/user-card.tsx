@@ -1,7 +1,12 @@
+import { KwaiUser } from "@/domain/user";
 import { ThumbsUp, Users } from "lucide-react";
 import Image from "next/image";
 
-export const UserCard = () => {
+interface UserCardProps {
+  user: KwaiUser;
+}
+
+export const UserCard = ({ user }: UserCardProps) => {
   return (
     <article
       className="space-y-3 gap-3 border p-4 backdrop-blur-md border-hairline border-white/10 hover:bg-zinc-900/60
@@ -17,14 +22,14 @@ export const UserCard = () => {
             height={70}
           />
           <div className="self-center text-zinc-50">
-            <h3 className="font-bold uppercase text-[0.7rem]">
-              Mma fight zone
-            </h3>
-            <h3 className="lowercase text-[0.6rem]">@mmafightzone</h3>
+            <h3 className="font-bold uppercase text-[0.7rem]">{user.kwaiId}</h3>
+            <h3 className="lowercase text-[0.6rem]">@{user.kwaiId}</h3>
           </div>
         </div>
         <div className="flex items-center bg-green-800 p-1 rounded-md">
-          <span className="text-[0.6rem] text-zinc-50">Alta Qualidade</span>
+          <span className="text-[0.6rem] text-zinc-50">
+            {user.type === "Tipo A" ? "Alta Qualidade" : "Baixa Qualidade"}
+          </span>
         </div>
       </div>
       <footer className="mx-auto w-2/3 border border-hairline border-white/10 p-3 rounded-md">
