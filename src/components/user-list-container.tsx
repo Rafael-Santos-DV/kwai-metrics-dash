@@ -10,16 +10,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Input } from "./ui/input";
 import { useState } from "react";
+import { SearchInput } from "./search-input";
+import { useSearchParams } from "next/navigation";
 
 export const UserListContainer = ({
   data,
 }: {
   data: { pages: Pages[]; previewPages: string[] };
 }) => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") ?? "";
+
   const [selectedMonth, setSelectedMonth] = useState(data.previewPages[0]);
-  const [search, setSearch] = useState("");
 
   const currentPage = data.pages.find((p) => p.page === selectedMonth);
 
@@ -52,11 +55,7 @@ export const UserListContainer = ({
           </SelectContent>
         </Select>
 
-        <Input
-          className="border-orange-500 max-md:hidden"
-          placeholder="Pesquisar"
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <SearchInput className="max-md:hidden" />
       </div>
     </>
   );
