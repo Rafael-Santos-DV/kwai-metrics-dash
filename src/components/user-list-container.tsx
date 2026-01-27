@@ -21,14 +21,17 @@ export const UserListContainer = ({
 }) => {
   const searchParams = useSearchParams();
   const search = searchParams.get("search") ?? "";
+  const type = searchParams.get("type");
 
   const [selectedMonth, setSelectedMonth] = useState(data.previewPages[0]);
 
   const currentPage = data.pages.find((p) => p.page === selectedMonth);
 
   const filterdUsers =
-    currentPage?.users.filter((user) =>
-      user.kwaiId.toLowerCase().includes(search.toLowerCase()),
+    currentPage?.users.filter(
+      (user) =>
+        user.kwaiId.toLowerCase().includes(search.toLowerCase()) &&
+        (type ? user.type.includes(type) : true),
     ) || [];
   return (
     <>

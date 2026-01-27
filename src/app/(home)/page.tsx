@@ -27,9 +27,8 @@ export default async function Home() {
       </div>
       <div className="">
         <div className="flex gap-2">
-          <FilterButton label="Alta qualidade" isActive />
-          <FilterButton label="Alta qualidade" isActive={false} />
-          <FilterButton label="Alta qualidade" isActive={false} />
+          <FilterButton label="Tipo A" type="A" />
+          <FilterButton label="Tipo B" type="B" />
         </div>
       </div>
       <Suspense

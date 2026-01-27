@@ -1,4 +1,5 @@
 import { KwaiUser } from "@/domain/user";
+import { cn } from "@/lib/utils";
 import { ThumbsUp, Users } from "lucide-react";
 import Image from "next/image";
 
@@ -26,9 +27,14 @@ export const UserCard = ({ user }: UserCardProps) => {
             <h3 className="lowercase text-[0.6rem]">@{user.kwaiId}</h3>
           </div>
         </div>
-        <div className="flex items-center bg-green-800 p-1 rounded-md">
-          <span className="text-[0.6rem] text-zinc-50">
-            {user.type === "Tipo A" ? "Alta Qualidade" : "Baixa Qualidade"}
+        <div
+          className={cn(
+            `flex items-center bg-green-800 px-2 py-1 rounded-md`,
+            user.type === "Tipo B" && "bg-red-500",
+          )}
+        >
+          <span className={`text-[0.6rem] text-zinc-50`}>
+            {user.type.toUpperCase()}
           </span>
         </div>
       </div>
