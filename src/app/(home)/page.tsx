@@ -12,6 +12,7 @@ export default async function Home({
 }: {
   searchParams: Promise<{ page: string }>;
 }) {
+  console.log("teste");
   const { page } = await searchParams;
 
   const pagesData = await getAllSheetsData();
