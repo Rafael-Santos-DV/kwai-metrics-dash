@@ -25,7 +25,7 @@ export async function getAllSheetsData(): Promise<{
 
     const valueRanges = response.data.valueRanges || [];
 
-    const allUsers: Pages[] = valueRanges.map((valueRange, index) => {
+    const allUsers: IPage[] = valueRanges.map((valueRange, index) => {
       const rows = valueRange.values || [];
       const originalName = sheetNames[index];
 
