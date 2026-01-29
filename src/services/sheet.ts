@@ -1,9 +1,9 @@
-import { Pages } from "@/domain/user";
+import { IPage } from "@/domain/user";
 import { sheet } from "@/lib/google";
 
 export async function getAllSheetsData(): Promise<{
   previewPages: Array<string>;
-  pages: Pages[];
+  pages: IPage[];
 }> {
   try {
     const spreadsheetId = "10BhyTu-nv0T6M75fnkc59vx_KjMlHUgnp4nddM0cyis";

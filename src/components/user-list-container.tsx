@@ -1,6 +1,6 @@
 "use client";
 
-import { Pages } from "@/domain/user";
+import { IPage, KwaiUser } from "@/domain/user";
 import { ScrollArea } from "./ui/scroll-area";
 import { UserCard } from "./user-card";
 import {
@@ -12,27 +12,70 @@ import {
 } from "./ui/select";
 import { useState } from "react";
 import { SearchInput } from "./search-input";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { getFullUsers } from "@/actions/users";
+import { toast } from "sonner";
 
 export const UserListContainer = ({
   data,
+  initialData,
 }: {
-  data: { pages: Pages[]; previewPages: string[] };
+  initialData: { page: string; users: KwaiUser[] };
+  data: { pages: IPage[]; previewPages: string[] };
 }) => {
   const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
   const search = searchParams.get("search") ?? "";
   const type = searchParams.get("type");
 
-  const [selectedMonth, setSelectedMonth] = useState(data.previewPages[0]);
-
-  const currentPage = data.pages.find((p) => p.page === selectedMonth);
+  const [previewData, setPreviewData] = useState(initialData);
+  const [isPending, setIsPending] = useState(false);
 
   const filterdUsers =
-    currentPage?.users.filter(
+    previewData?.users.filter(
       (user) =>
         user.kwaiId.toLowerCase().includes(search.toLowerCase()) &&
         (type ? user.type.includes(type) : true),
     ) || [];
+
+  const handleMonth = async (value: string) => {
+    if (isPending) return;
+
+    setIsPending(true);
+
+    toast.promise(
+      async () => {
+        const selectedPage = data.pages.find((p) => p.page === value);
+        if (!selectedPage) return;
+
+        const u = await getFullUsers(
+          data.pages.find((p) => p.page === value)!.users,
+        );
+
+        setPreviewData({ page: value, users: u });
+
+        const pageParams = new URLSearchParams(searchParams);
+        pageParams.set("page", value);
+        replace(`${pathname}?${pageParams.toString()}`);
+        setIsPending(false);
+      },
+      {
+        loading: "Carregando página...",
+        success: () => `${value} => Carregado com sucesso!`,
+        error: "Parece que deu erro!",
+        position: "top-center",
+        classNames: {
+          toast: "!bg-white dark:!bg-zinc-900",
+          success: "!text-green-500 !bg-green-50 !border-green-200",
+          error: "!text-red-500 !bg-red-50 !border-red-200",
+          loading: "!text-orange-500",
+        },
+      },
+    );
+  };
+
   return (
     <>
       <div className="flex-1 overflow-hidden">
@@ -45,8 +88,11 @@ export const UserListContainer = ({
         </ScrollArea>
       </div>
       <div className="flex gap-4 text-zinc-50">
-        <Select onValueChange={setSelectedMonth} defaultValue={selectedMonth}>
-          <SelectTrigger className="w-full border-orange-500 ">
+        <Select onValueChange={handleMonth} defaultValue={initialData.page}>
+          <SelectTrigger
+            className="w-full border-orange-500 "
+            disabled={isPending}
+          >
             <SelectValue placeholder="Selecionar Mês" />
           </SelectTrigger>
           <SelectContent>

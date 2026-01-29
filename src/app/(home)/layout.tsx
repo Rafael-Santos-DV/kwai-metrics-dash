@@ -13,7 +13,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className="w-full h-screen flex items-center px-4">{children}</body>
+      <body
+        className="w-full h-screen flex items-center px-4"
+        cz-shortcut-listen="true"
+      >
+        {children}
+      </body>
     </html>
   );
 }

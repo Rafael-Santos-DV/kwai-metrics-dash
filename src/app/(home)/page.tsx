@@ -1,12 +1,31 @@
+import { getFullUsers } from "@/actions/users";
 import { FilterButton } from "@/components/filter-button";
 import { SearchInput } from "@/components/search-input";
+import { Toaster } from "@/components/ui/sonner";
 import { UserListContainer } from "@/components/user-list-container";
 import { getAllSheetsData } from "@/services/sheet";
 import { CircleCheck } from "lucide-react";
 import { Suspense } from "react";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ page: string }>;
+}) {
+  const { page } = await searchParams;
+
   const pagesData = await getAllSheetsData();
+
+  const selectedPage =
+    pagesData.pages.find((u) => u.page === page) || pagesData.pages[0];
+
+  const users = await getFullUsers(selectedPage.users);
+
+  const initialPage = {
+    page: selectedPage.page,
+    users,
+  };
+
   return (
     <main className="flex flex-col gap-4 w-full h-[90vh] justify-between max-w-5xl lg:max-w-7xl mx-auto bg-zinc-900/40 border border-orange-500 rounded-md p-4">
       <header className="flex justify-between py-5">
@@ -34,8 +53,9 @@ export default async function Home() {
       <Suspense
         fallback={<div className="text-zinc-50">Carregando lista...</div>}
       >
-        <UserListContainer data={pagesData} />
+        <UserListContainer data={pagesData} initialData={initialPage} />
       </Suspense>
+      <Toaster />
     </main>
   );
 }

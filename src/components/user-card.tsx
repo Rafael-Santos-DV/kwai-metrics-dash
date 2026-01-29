@@ -7,6 +7,12 @@ interface UserCardProps {
   user: KwaiUser;
 }
 
+const formatNumber = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  compactDisplay: "short",
+  maximumFractionDigits: 1,
+});
+
 export const UserCard = ({ user }: UserCardProps) => {
   return (
     <article
@@ -17,10 +23,14 @@ export const UserCard = ({ user }: UserCardProps) => {
         <div className="flex gap-3">
           <Image
             className="rounded-full border-2 border-orange-500"
-            src={"/logo-test.jpg"}
+            src={user.avatar || "/kwai-avatar.jpg"}
             alt="user"
             width={70}
             height={70}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = "/kwai-avatar.jpg";
+            }}
           />
           <div className="self-center text-zinc-50">
             <h3 className="font-bold uppercase text-[0.7rem]">{user.kwaiId}</h3>
@@ -45,7 +55,9 @@ export const UserCard = ({ user }: UserCardProps) => {
 
             <div className="flex gap-1 items-center">
               <Users size={18} className="text-orange-500" />
-              <span className="text-amber-50 font-bold">963.2K</span>
+              <span className="text-amber-50 font-bold">
+                {user.followers ? formatNumber.format(user.followers) : 0.0}
+              </span>
             </div>
           </div>
           <div className="flex-col flex text-center gap-1">
@@ -53,7 +65,9 @@ export const UserCard = ({ user }: UserCardProps) => {
 
             <div className="flex gap-1  items-center">
               <ThumbsUp size={18} className="text-orange-500" />
-              <span className="text-amber-50 font-bold">20.5M</span>
+              <span className="text-amber-50 font-bold">
+                {user.likes ? formatNumber.format(user.likes) : 0.0}
+              </span>
             </div>
           </div>
         </div>
