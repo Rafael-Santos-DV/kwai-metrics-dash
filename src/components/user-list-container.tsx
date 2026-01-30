@@ -51,6 +51,7 @@ export const UserListContainer = ({
         if (!selectedPage) return;
 
         const u = await getFullUsers(
+          value,
           data.pages.find((p) => p.page === value)!.users,
         );
 

@@ -20,8 +20,9 @@ export default async function Home({
   const selectedPage =
     pagesData.pages.find((u) => u.page === page) || pagesData.pages[0];
 
-  const users = await getFullUsers(selectedPage.users);
+  const users = await getFullUsers(selectedPage.page, selectedPage.users);
 
+  console.log(users);
   const initialPage = {
     page: selectedPage.page,
     users,
