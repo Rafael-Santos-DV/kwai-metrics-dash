@@ -16,7 +16,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getFullUsers } from "@/actions/users";
 import { toast } from "sonner";
 
-export const UserListContainer = ({
+const UserListContainer = ({
   data,
   initialData,
 }: {
@@ -110,3 +110,5 @@ export const UserListContainer = ({
     </>
   );
 };
+
+export default UserListContainer;

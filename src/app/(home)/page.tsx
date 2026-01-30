@@ -2,17 +2,23 @@ import { getFullUsers } from "@/actions/users";
 import { FilterButton } from "@/components/filter-button";
 import { SearchInput } from "@/components/search-input";
 import { Toaster } from "@/components/ui/sonner";
-import { UserListContainer } from "@/components/user-list-container";
 import { getAllSheetsData } from "@/services/sheet";
 import { CircleCheck } from "lucide-react";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+const UserListContainer = dynamic(
+  () => import("@/components/user-list-container"),
+  {
+    // ssr: false,
+  },
+);
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<{ page: string }>;
 }) {
-  console.log("teste");
   const { page } = await searchParams;
 
   const pagesData = await getAllSheetsData();
@@ -22,7 +28,6 @@ export default async function Home({
 
   const users = await getFullUsers(selectedPage.page, selectedPage.users);
 
-  console.log(users);
   const initialPage = {
     page: selectedPage.page,
     users,

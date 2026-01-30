@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("http://aws-br-pic.kwai.net/**"),
       new URL("http://aws-static.kwai.net/**"),
+      new URL("http://ak-static.kwai.net/**"),
     ],
   },
 };
