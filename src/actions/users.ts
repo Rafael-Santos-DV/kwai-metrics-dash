@@ -18,11 +18,8 @@ export async function getFullUsers(
     console.log(`📦 Cache Hit para página: ${pageName}`);
 
     cachedPage.forEach((user) => {
-      if (user.type.includes("TIPO")) {
-        user.type = user.type
-          .replace(/TIPO\s*/g, "TIPO ")
-          .trim()
-          .toUpperCase();
+      if (user.type.toUpperCase().includes("TIPO")) {
+        user.type = user.type.replace(/TIPO\s*/gi, "TIPO ").toUpperCase();
       }
     });
 
@@ -36,11 +33,8 @@ export async function getFullUsers(
 
     const userInfo = await getKwaiProfileData(user.kwaiId);
 
-    if (user.type.includes("TIPO")) {
-      user.type = user.type
-        .replace(/TIPO\s*/g, "TIPO ")
-        .trim()
-        .toUpperCase();
+    if (user.type.toUpperCase().includes("TIPO")) {
+      user.type = user.type.replace(/TIPO\s*/gi, "TIPO ").toUpperCase();
     }
 
     const customUser: KwaiUser = {
