@@ -14,6 +14,8 @@ const formatNumber = new Intl.NumberFormat("en-US", {
 });
 
 export const UserCard = ({ user }: UserCardProps) => {
+  const userType = user.type.toUpperCase();
+
   return (
     <article
       className="space-y-3 gap-3 border p-4 backdrop-blur-md border-hairline border-white/10 hover:bg-zinc-900/60
@@ -40,15 +42,15 @@ export const UserCard = ({ user }: UserCardProps) => {
         <div
           className={cn(
             `flex items-center px-2 py-1 rounded-md`,
-            user.type === "TIPO B" && "bg-red-500",
-            user.type === "TIPO A" && "bg-green-800",
-            user.type !== "TIPO A" && user.type !== "TIPO B" && "bg-zinc-500",
+            userType === "TIPO B" && "bg-red-500",
+            userType === "TIPO A" && "bg-green-800",
+            userType !== "TIPO A" && userType !== "TIPO B" && "bg-zinc-500",
           )}
         >
           <span className={`text-[0.6rem] text-zinc-50`}>
-            {user.type.length < 10
-              ? user.type.toUpperCase()
-              : user.type.substring(0, 9).trim() + "..."}
+            {userType.length < 10
+              ? userType.toUpperCase()
+              : userType.substring(0, 9).trim() + "..."}
           </span>
         </div>
       </div>

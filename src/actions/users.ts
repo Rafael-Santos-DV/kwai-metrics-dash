@@ -19,7 +19,10 @@ export async function getFullUsers(
 
     cachedPage.forEach((user) => {
       if (user.type.includes("TIPO")) {
-        user.type = user.type.replace(/TIPO\s*/g, "TIPO ").trim();
+        user.type = user.type
+          .replace(/TIPO\s*/g, "TIPO ")
+          .trim()
+          .toUpperCase();
       }
     });
 
@@ -34,7 +37,10 @@ export async function getFullUsers(
     const userInfo = await getKwaiProfileData(user.kwaiId);
 
     if (user.type.includes("TIPO")) {
-      user.type = user.type.replace(/TIPO\s*/g, "TIPO ").trim();
+      user.type = user.type
+        .replace(/TIPO\s*/g, "TIPO ")
+        .trim()
+        .toUpperCase();
     }
 
     const customUser: KwaiUser = {
