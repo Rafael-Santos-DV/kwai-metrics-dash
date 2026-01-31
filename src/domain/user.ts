@@ -2,7 +2,7 @@ export interface KwaiUser {
   uid: string;
   kwaiId: string;
   agency: string;
-  type: "Tipo A" | "Tipo B";
+  type: string;
   date?: string;
   name?: string;
   avatar?: string;

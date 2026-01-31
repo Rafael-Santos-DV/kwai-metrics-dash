@@ -39,12 +39,16 @@ export const UserCard = ({ user }: UserCardProps) => {
         </div>
         <div
           className={cn(
-            `flex items-center bg-green-800 px-2 py-1 rounded-md`,
-            user.type === "Tipo B" && "bg-red-500",
+            `flex items-center px-2 py-1 rounded-md`,
+            user.type === "TIPO B" && "bg-red-500",
+            user.type === "TIPO A" && "bg-green-800",
+            user.type !== "TIPO A" && user.type !== "TIPO B" && "bg-zinc-500",
           )}
         >
           <span className={`text-[0.6rem] text-zinc-50`}>
-            {user.type.toUpperCase()}
+            {user.type.length < 10
+              ? user.type.toUpperCase()
+              : user.type.substring(0, 9).trim() + "..."}
           </span>
         </div>
       </div>

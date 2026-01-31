@@ -12,12 +12,18 @@ export async function getFullUsers(
 ): Promise<KwaiUser[]> {
   const cacheKey = `page:${pageName}`;
 
-  const cachedPage = await redis.get(cacheKey);
+  const cachedPage = (await redis.get(cacheKey)) as KwaiUser[];
 
   if (cachedPage) {
     console.log(`📦 Cache Hit para página: ${pageName}`);
 
-    return cachedPage as KwaiUser[];
+    cachedPage.forEach((user) => {
+      if (user.type.includes("TIPO")) {
+        user.type = user.type.replace(/TIPO\s*/g, "TIPO ").trim();
+      }
+    });
+
+    return cachedPage;
   }
 
   console.log(`🔍 Cache Miss. Iniciando scraping para: ${pageName}`);
@@ -26,6 +32,10 @@ export async function getFullUsers(
     // await new Promise((resolve) => setTimeout(resolve, index * 800));
 
     const userInfo = await getKwaiProfileData(user.kwaiId);
+
+    if (user.type.includes("TIPO")) {
+      user.type = user.type.replace(/TIPO\s*/g, "TIPO ").trim();
+    }
 
     const customUser: KwaiUser = {
       ...user,
