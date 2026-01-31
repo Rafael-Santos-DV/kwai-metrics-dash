@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SearchInput } from "./search-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getFullUsers } from "@/actions/users";
@@ -23,6 +23,8 @@ const UserListContainer = ({
   initialData: { page: string; users: KwaiUser[] };
   data: { pages: IPage[]; previewPages: string[] };
 }) => {
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -61,6 +63,15 @@ const UserListContainer = ({
         pageParams.set("page", value);
         replace(`${pathname}?${pageParams.toString()}`);
         setIsPending(false);
+
+        const viewport = scrollAreaRef.current?.querySelector(
+          "[data-radix-scroll-area-viewport]",
+        ) as HTMLDivElement | null;
+
+        viewport?.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       },
       {
         loading: "Carregando página...",
@@ -80,7 +91,7 @@ const UserListContainer = ({
   return (
     <>
       <div className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full rounded-md p-4">
+        <ScrollArea className="h-full rounded-md p-4" ref={scrollAreaRef}>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
             {filterdUsers.map((user) => (
               <UserCard key={user.kwaiId} user={user} />
